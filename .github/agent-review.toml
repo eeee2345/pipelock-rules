@@ -1,0 +1,27 @@
+# Repository policy from AGENTS.md, CONTRIBUTING.md, and the bundle checks.
+[review]
+instructions = """
+Review changes against this repository's detection-rule and signed-bundle
+contracts. Patterns must compile with Go's RE2 engine: no lookaround or
+backreferences. Pipelock applies case-insensitive matching automatically.
+Check minimum match lengths, specific credential prefixes, unintended broad
+matches, and realistic false positives against the supplied evidence.
+
+Each rule needs a unique type-prefixed ID and the required YAML schema fields.
+Only tool-poison rules use scan_field, selecting name or description. Stable
+rules need primary source references and true-positive and false-positive
+fixtures; experimental rules need true positives and an explanation. Every
+non-empty fixture line is test data, including lines that look like comments.
+Keep fixtures in review scope and check that they exercise the intended rule.
+
+Trace source rules through compile scripts, published bundles, compatibility
+contracts, signature verification, and version-bump checks when these appear
+in the diff. Committed bundles must match source and retain signature checks.
+New bundles use format_version 2; existing version 1 bundles require coordinated
+migration. Signing belongs to maintainers with keystore access. Changes to rule
+counts, bundle versions, CI's Pipelock version, signing-key pin, or CI job names
+must keep generated diagrams and the rule catalog consistent.
+"""
+
+[ignore]
+glob = []
